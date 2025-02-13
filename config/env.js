@@ -1,9 +1,9 @@
 import { config } from "dotenv";
 
-// Load environment variables from a file based on NODE_ENV or default to 'development'
-config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
+config(); // Automatically loads the correct .env file
 
-// Destructure and export the PORT variable from process.env
-export const { PORT, NODE_ENV, DB_URI,
-    JWT_SECRET, JWT_EXPIRES_IN
-} = process.env;
+export const { PORT, NODE_ENV, DB_URI, JWT_SECRET, JWT_EXPIRES_IN } = process.env;
+
+if (!DB_URI) {
+  throw new Error("❌ Missing MongoDB URI! Please check your .env file.");
+}
